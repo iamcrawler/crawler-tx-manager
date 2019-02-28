@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 /**
  * 心跳包
- *  Created by liuliang on 2018/10/9.
+ * Created by liuliang on 2018/10/9.
  */
 @Service(value = "h")
-public class ActionHServiceImpl implements IActionService{
+public class ActionHServiceImpl implements IActionService {
 
 
     @Autowired
     private ConfigReader configReader;
 
     @Override
-    public String execute(String channelAddress, String key, JSONObject params ) {
+    public String execute(String channelAddress, String key, JSONObject params) {
         return String.valueOf(configReader.getTransactionNettyDelayTime());
     }
 }

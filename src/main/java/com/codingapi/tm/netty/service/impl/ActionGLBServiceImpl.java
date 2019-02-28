@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 /**
  * 获取负载模块信息
- *  Created by liuliang on 2018/10/9.
+ * Created by liuliang on 2018/10/9.
  */
 @Service(value = "glb")
-public class ActionGLBServiceImpl implements IActionService{
+public class ActionGLBServiceImpl implements IActionService {
 
 
     @Autowired
@@ -21,15 +21,15 @@ public class ActionGLBServiceImpl implements IActionService{
 
 
     @Override
-    public String execute(String channelAddress, String key, JSONObject params ) {
+    public String execute(String channelAddress, String key, JSONObject params) {
         String res;
         String groupId = params.getString("g");
         String k = params.getString("k");
 
-        LoadBalanceInfo loadBalanceInfo =  loadBalanceService.get(groupId,k);
-        if(loadBalanceInfo==null){
+        LoadBalanceInfo loadBalanceInfo = loadBalanceService.get(groupId, k);
+        if (loadBalanceInfo == null) {
             res = "";
-        }else{
+        } else {
             res = loadBalanceInfo.getData();
         }
         return res;

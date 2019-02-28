@@ -77,15 +77,15 @@ $(document).on("click", ".model-time", function () {
 });
 
 
-var confim = function(title,callback){
+var confim = function (title, callback) {
     var button = $('#show-alert').find("button[data-event=button]");
     button.unbind();
 
 
     $("#content").text(title);
 
-    button.click(function(){
-        if(callback!=null){
+    button.click(function () {
+        if (callback != null) {
             callback();
             reloadPage();
         }
@@ -101,7 +101,7 @@ $(document).on("click", ".delete", function () {
     var tag = $(this).parent().parent();
 
 
-    confim("确认要删除吗？",function(){
+    confim("确认要删除吗？", function () {
 
         http.get('/admin/delCompensate?path=' + path, '加载数据...', function (res) {
             if (res) {
@@ -118,10 +118,10 @@ $(document).on("click", ".delete", function () {
 
 });
 
-var reloadPage = function(){
-    var compensate =  $("#compensate");
+var reloadPage = function () {
+    var compensate = $("#compensate");
     var lg = compensate.find("tr").length;
-    if(lg==1){
+    if (lg == 1) {
         location.reload();
     }
 }
@@ -133,7 +133,7 @@ $(document).on("click", ".compensate", function () {
 
     var tag = $(this).parent().parent();
 
-    confim("确认要补偿吗？",function(){
+    confim("确认要补偿吗？", function () {
 
         http.get('/admin/compensate?path=' + path, '加载数据...', function (res) {
             if (res) {

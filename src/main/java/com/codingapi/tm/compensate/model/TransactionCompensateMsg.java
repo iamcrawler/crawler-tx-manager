@@ -25,7 +25,7 @@ public class TransactionCompensateMsg {
 
     public TransactionCompensateMsg(long currentTime, String groupId, String model, String address,
                                     String uniqueKey, String className,
-                                    String methodStr, String data, int time, int state,int startError) {
+                                    String methodStr, String data, int time, int state, int startError) {
         this.currentTime = currentTime;
         this.groupId = groupId;
         this.model = model;

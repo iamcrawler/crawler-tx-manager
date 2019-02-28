@@ -80,7 +80,7 @@
             return this.attr.apply(this, arguments);
         }
         var val = this.prop.apply(this, arguments);
-        if (( val && val.jquery ) || typeof val === 'string') {
+        if ((val && val.jquery) || typeof val === 'string') {
             return val;
         }
         return this.attr.apply(this, arguments);
@@ -167,7 +167,7 @@
 
         var q = $.param(a, traditional);
         if (qx) {
-            q = ( q ? (q + '&' + qx) : qx );
+            q = (q ? (q + '&' + qx) : qx);
         }
         if (options.type.toUpperCase() == 'GET') {
             options.url += (options.url.indexOf('?') >= 0 ? '&' : '?') + q;
@@ -1143,9 +1143,9 @@
         }
 
         if (successful && (!n || el.disabled || t == 'reset' || t == 'button' ||
-                (t == 'checkbox' || t == 'radio') && !el.checked ||
-                (t == 'submit' || t == 'image') && el.form && el.form.clk != el ||
-                tag == 'select' && el.selectedIndex == -1)) {
+            (t == 'checkbox' || t == 'radio') && !el.checked ||
+            (t == 'submit' || t == 'image') && el.form && el.form.clk != el ||
+            tag == 'select' && el.selectedIndex == -1)) {
             return null;
         }
 

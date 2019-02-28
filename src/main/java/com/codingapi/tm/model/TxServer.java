@@ -56,14 +56,14 @@ public class TxServer {
     }
 
 
-	public int getCompensateMaxWaitTime() {
-		return compensateMaxWaitTime;
-	}
+    public int getCompensateMaxWaitTime() {
+        return compensateMaxWaitTime;
+    }
 
 
-	public void setCompensateMaxWaitTime(int compensateMaxWaitTime) {
-		this.compensateMaxWaitTime = compensateMaxWaitTime;
-	}
-    
-    
+    public void setCompensateMaxWaitTime(int compensateMaxWaitTime) {
+        this.compensateMaxWaitTime = compensateMaxWaitTime;
+    }
+
+
 }

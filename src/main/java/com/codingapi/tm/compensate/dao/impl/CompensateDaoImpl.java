@@ -59,7 +59,7 @@ public class CompensateDaoImpl implements CompensateDao {
         List<String> keys = redisServerService.getKeys(key);
         List<String> times = new ArrayList<String>();
         for (String k : keys) {
-            if(k.length()>36) {
+            if (k.length() > 36) {
                 String time = k.substring(k.length() - 24, k.length() - 14);
                 if (!times.contains(time)) {
                     times.add(time);

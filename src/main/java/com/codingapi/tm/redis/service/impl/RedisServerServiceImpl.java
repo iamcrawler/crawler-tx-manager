@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * Created by liuliang on 2018/10/9.
  */
 @Service
-public class RedisServerServiceImpl implements RedisServerService{
+public class RedisServerServiceImpl implements RedisServerService {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
@@ -31,14 +31,14 @@ public class RedisServerServiceImpl implements RedisServerService{
 
 
     public String loadNotifyJson() {
-        Set<String> keys =  redisTemplate.keys(configReader.getKeyPrefixCompensate()+"*");
-        ValueOperations<String,String> value =  redisTemplate.opsForValue();
+        Set<String> keys = redisTemplate.keys(configReader.getKeyPrefixCompensate() + "*");
+        ValueOperations<String, String> value = redisTemplate.opsForValue();
         JSONArray jsonArray = new JSONArray();
-        for(String key:keys){
+        for (String key : keys) {
             String json = value.get(key);
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("key",key);
-            jsonObject.put("value",JSONObject.parse(json));
+            jsonObject.put("key", key);
+            jsonObject.put("value", JSONObject.parse(json));
             jsonArray.add(jsonObject);
         }
         return jsonArray.toJSONString();
@@ -58,7 +58,7 @@ public class RedisServerServiceImpl implements RedisServerService{
         if (StringUtils.isEmpty(json)) {
             return null;
         }
-        return  TxGroup.parser(json);
+        return TxGroup.parser(json);
     }
 
 
@@ -103,13 +103,13 @@ public class RedisServerServiceImpl implements RedisServerService{
     @Override
     public void saveLoadBalance(String groupName, String key, String data) {
         HashOperations<String, String, String> value = redisTemplate.opsForHash();
-        value.put(groupName,key,data);
+        value.put(groupName, key, data);
     }
 
 
     @Override
     public String getLoadBalance(String groupName, String key) {
         HashOperations<String, String, String> value = redisTemplate.opsForHash();
-        return value.get(groupName,key);
+        return value.get(groupName, key);
     }
 }

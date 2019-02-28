@@ -32,21 +32,21 @@ public class ChannelSender {
     }
 
 
-    public void send(String msg){
-        if(channel!=null){
-            SocketUtils.sendMsg(channel,msg);
+    public void send(String msg) {
+        if (channel != null) {
+            SocketUtils.sendMsg(channel, msg);
         }
 
     }
 
-    public void send(String msg,Task task){
-        if(channel!=null){
-            SocketUtils.sendMsg(channel,msg);
-        }else{
-            String url = String.format("http://%s/tx/manager/sendMsg",address);
-            final String res = HttpUtils.post(url,"msg="+msg+"&model="+modelName);
-            if(StringUtils.isNotEmpty(res)){
-                if(task!=null) {
+    public void send(String msg, Task task) {
+        if (channel != null) {
+            SocketUtils.sendMsg(channel, msg);
+        } else {
+            String url = String.format("http://%s/tx/manager/sendMsg", address);
+            final String res = HttpUtils.post(url, "msg=" + msg + "&model=" + modelName);
+            if (StringUtils.isNotEmpty(res)) {
+                if (task != null) {
                     task.setBack(new IBack() {
                         @Override
                         public Object doing(Object... objs) throws Throwable {
@@ -55,8 +55,8 @@ public class ChannelSender {
                     });
                     task.signalTask();
                 }
-            }else{
-                if(task!=null) {
+            } else {
+                if (task != null) {
                     task.setBack(new IBack() {
                         @Override
                         public Object doing(Object... objs) throws Throwable {

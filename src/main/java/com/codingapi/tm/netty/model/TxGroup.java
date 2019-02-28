@@ -31,7 +31,7 @@ public class TxGroup {
     /**
      * 是否强制回滚(1:开启，0:关闭)
      */
-    private int rollback = 0 ;
+    private int rollback = 0;
 
     private List<TxInfo> list;
 
@@ -153,8 +153,8 @@ public class TxGroup {
         jsonObject.put("s", getState());
         jsonObject.put("i", getIsCompensate());
         jsonObject.put("r", getRollback());
-        jsonObject.put("o",getHasOver());
-        if(noList) {
+        jsonObject.put("o", getHasOver());
+        if (noList) {
             JSONArray jsonArray = new JSONArray();
             for (TxInfo info : getList()) {
                 JSONObject item = new JSONObject();

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 /**
  * 添加负载模块信息
- *  Created by liuliang on 2018/10/9.
+ * Created by liuliang on 2018/10/9.
  */
 @Service(value = "plb")
-public class ActionPLBServiceImpl implements IActionService{
+public class ActionPLBServiceImpl implements IActionService {
 
 
     @Autowired
@@ -21,7 +21,7 @@ public class ActionPLBServiceImpl implements IActionService{
 
 
     @Override
-    public String execute(String channelAddress, String key, JSONObject params ) {
+    public String execute(String channelAddress, String key, JSONObject params) {
 
         String groupId = params.getString("g");
         String k = params.getString("k");
@@ -31,8 +31,8 @@ public class ActionPLBServiceImpl implements IActionService{
         loadBalanceInfo.setData(data);
         loadBalanceInfo.setKey(k);
         loadBalanceInfo.setGroupId(groupId);
-        boolean ok =  loadBalanceService.put(loadBalanceInfo);
+        boolean ok = loadBalanceService.put(loadBalanceInfo);
 
-        return ok?"1":"0";
+        return ok ? "1" : "0";
     }
 }

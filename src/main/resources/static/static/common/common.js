@@ -17,7 +17,7 @@ function hint(msg, duration) {
     }, duration);
 }
 
-Date.prototype.format = function(format) {
+Date.prototype.format = function (format) {
     var date = {
         "M+": this.getMonth() + 1,
         "d+": this.getDate(),

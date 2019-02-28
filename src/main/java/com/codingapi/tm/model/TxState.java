@@ -28,12 +28,12 @@ public class TxState {
 
 
     /**
-     *  transaction_netty_heart_time
+     * transaction_netty_heart_time
      */
     private int transactionNettyHeartTime;
 
     /**
-     *  transaction_netty_delay_time
+     * transaction_netty_delay_time
      */
     private int transactionNettyDelayTime;
 
@@ -63,7 +63,7 @@ public class TxState {
      * slb list
      */
     private List<String> slbList;
-    
+
     /**
      * 自动补偿间隔时间
      */
@@ -158,13 +158,13 @@ public class TxState {
         this.notifyUrl = notifyUrl;
     }
 
-	public int getCompensateMaxWaitTime() {
-		return compensateMaxWaitTime;
-	}
+    public int getCompensateMaxWaitTime() {
+        return compensateMaxWaitTime;
+    }
 
-	public void setCompensateMaxWaitTime(int compensateMaxWaitTime) {
-		this.compensateMaxWaitTime = compensateMaxWaitTime;
-	}
-    
-    
+    public void setCompensateMaxWaitTime(int compensateMaxWaitTime) {
+        this.compensateMaxWaitTime = compensateMaxWaitTime;
+    }
+
+
 }

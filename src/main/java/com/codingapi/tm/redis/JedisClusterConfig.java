@@ -31,16 +31,16 @@ public class JedisClusterConfig {
     public JedisCluster jedisClusterFactory() {
         String[] serverArray = redisProperties.getNodes().split(",");
         Set<HostAndPort> nodes = new HashSet<HostAndPort>();
-        for (String ipPort: serverArray) {
+        for (String ipPort : serverArray) {
             String[] ipPortPair = ipPort.split(":");
-            nodes.add(new HostAndPort(ipPortPair[0].trim(),Integer.valueOf(ipPortPair[1].trim())));
+            nodes.add(new HostAndPort(ipPortPair[0].trim(), Integer.valueOf(ipPortPair[1].trim())));
         }
         return new JedisCluster(nodes, redisProperties.getCommandTimeout());
     }
 
     @Bean
-    public RedisTemplate redisTemplateFactory(){
-        RedisTemplate redisTemplate =new RedisTemplate();
+    public RedisTemplate redisTemplateFactory() {
+        RedisTemplate redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(jedisConnectionFactory());
 
         //指定具体序列化方式  不过这种方式不是很好,一个系统中可能对应值的类型不一样,如果全部使用StringRedisSerializer 序列化
@@ -55,6 +55,7 @@ public class JedisClusterConfig {
 
     /**
      * redisCluster配置
+     *
      * @return
      */
     @Bean
@@ -72,13 +73,12 @@ public class JedisClusterConfig {
      * 也就是当
      * spring.redis.cluster.nodes 配置好的情况下,就可以实例化 JedisCluster.
      * 也就是说,我们使用JedisCluster 的方式只需要在application.properties 配置文件中
-     *
+     * <p>
      * #redis cluster
-     *  spring.redis.cluster.nodes=127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002
-     *
+     * spring.redis.cluster.nodes=127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002
+     * <p>
      * RedisTemplate.afterPropertiesSet() 中查看到最终方法中使用了JedisCluster 对象。
      * 也就是说 redisTemplate依赖jedis ,内部操作的就是jedis,同理内部也操作jedisCluster.
-     *
      *
      * @return
      */

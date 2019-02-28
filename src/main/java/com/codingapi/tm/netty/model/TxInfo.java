@@ -158,12 +158,12 @@ public class TxInfo extends JsonModel {
     @Override
     public String toString() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("kid",getKid());
+        jsonObject.put("kid", getKid());
         jsonObject.put("channelAddress", getChannelAddress());
-        jsonObject.put("notify",getNotify());
-        jsonObject.put("isGroup",getIsGroup());
-        jsonObject.put("address",getAddress());
-        jsonObject.put("uniqueKey",getUniqueKey());
+        jsonObject.put("notify", getNotify());
+        jsonObject.put("isGroup", getIsGroup());
+        jsonObject.put("address", getAddress());
+        jsonObject.put("uniqueKey", getUniqueKey());
 
         jsonObject.put("model", getModel());
         jsonObject.put("modelIpAddress", getModelIpAddress());

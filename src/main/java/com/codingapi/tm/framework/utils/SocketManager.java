@@ -30,14 +30,14 @@ public class SocketManager {
 
     private List<Channel> clients = null;
 
-    private Map<String,String> lines = null;
+    private Map<String, String> lines = null;
 
     private static SocketManager manager = null;
 
     public static SocketManager getInstance() {
-        if (manager == null){
-            synchronized (SocketManager.class){
-                if(manager==null){
+        if (manager == null) {
+            synchronized (SocketManager.class) {
+                if (manager == null) {
                     manager = new SocketManager();
                 }
             }
@@ -94,13 +94,13 @@ public class SocketManager {
     }
 
     public void onLine(String modelName, String uniqueKey) {
-        lines.put(modelName,uniqueKey);
+        lines.put(modelName, uniqueKey);
     }
 
     public Channel getChannelByUniqueKey(String uniqueKey) {
         for (Channel channel : clients) {
             String modelName = channel.remoteAddress().toString();
-            String value  = lines.get(modelName);
+            String value = lines.get(modelName);
             if (uniqueKey.equals(value)) {
                 return channel;
             }

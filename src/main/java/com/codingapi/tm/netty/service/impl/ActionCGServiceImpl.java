@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
  * Created by liuliang on 2018/10/9.
  */
 @Service(value = "cg")
-public class ActionCGServiceImpl implements IActionService{
+public class ActionCGServiceImpl implements IActionService {
 
 
     @Autowired
     private TxManagerService txManagerService;
 
     @Override
-    public String execute(String channelAddress, String key, JSONObject params ) {
+    public String execute(String channelAddress, String key, JSONObject params) {
         String res = "";
         String groupId = params.getString("g");
         TxGroup txGroup = txManagerService.createTransactionGroup(groupId);
-        if(txGroup!=null) {
+        if (txGroup != null) {
             txGroup.setNowTime(System.currentTimeMillis());
             res = txGroup.toJsonString(false);
-        }else {
+        } else {
             res = "";
         }
         return res;

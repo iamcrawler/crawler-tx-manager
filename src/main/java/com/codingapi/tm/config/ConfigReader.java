@@ -35,7 +35,7 @@ public class ConfigReader {
 
     @Value("${tm.compensate.tryTime}")
     private int compensateTryTime;
-    
+
     @Value("${tm.compensate.maxWaitTime}")
     private int compensateMaxWaitTime;
 
@@ -70,7 +70,7 @@ public class ConfigReader {
         return key_prefix_compensate;
     }
 
-    public int getSocketPort(){
+    public int getSocketPort() {
         return socketPort;
     }
 
@@ -98,9 +98,9 @@ public class ConfigReader {
         return compensateTryTime;
     }
 
-	public int getCompensateMaxWaitTime() {
-		return compensateMaxWaitTime;
-	}
-    
-    
+    public int getCompensateMaxWaitTime() {
+        return compensateMaxWaitTime;
+    }
+
+
 }

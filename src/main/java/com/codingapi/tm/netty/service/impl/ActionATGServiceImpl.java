@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 /**
  * 添加事务组
- *  Created by liuliang on 2018/10/9.
+ * Created by liuliang on 2018/10/9.
  */
 @Service(value = "atg")
-public class ActionATGServiceImpl implements IActionService{
+public class ActionATGServiceImpl implements IActionService {
 
 
     @Autowired
     private TxManagerService txManagerService;
 
     @Override
-    public String execute(String channelAddress,String key,JSONObject params ) {
+    public String execute(String channelAddress, String key, JSONObject params) {
         String res = "";
         String groupId = params.getString("g");
         String taskId = params.getString("t");
@@ -28,11 +28,11 @@ public class ActionATGServiceImpl implements IActionService{
 
         TxGroup txGroup = txManagerService.addTransactionGroup(groupId, taskId, isGroup, channelAddress, methodStr);
 
-        if(txGroup!=null) {
+        if (txGroup != null) {
             txGroup.setNowTime(System.currentTimeMillis());
             res = txGroup.toJsonString(false);
-        }else {
-             res = "";
+        } else {
+            res = "";
         }
         return res;
     }

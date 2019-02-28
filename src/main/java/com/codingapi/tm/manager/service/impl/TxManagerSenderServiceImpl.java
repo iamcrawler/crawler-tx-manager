@@ -42,7 +42,7 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
 
     private Logger logger = LoggerFactory.getLogger(TxManagerSenderServiceImpl.class);
 
-    private ScheduledExecutorService executorService  = Executors.newScheduledThreadPool(100);
+    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(100);
 
     private Executor threadPool = Executors.newFixedThreadPool(100);
 
@@ -64,19 +64,19 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
         setChannel(txGroup.getList());
 
         //事务不满足直接回滚事务
-        if (txGroup.getState()==0) {
+        if (txGroup.getState() == 0) {
             transaction(txGroup, 0);
             return 0;
         }
 
-        if(txGroup.getRollback()==1){
+        if (txGroup.getRollback() == 1) {
             transaction(txGroup, 0);
             return -1;
         }
 
-        boolean hasOk =  transaction(txGroup, 1);
-        txManagerService.dealTxGroup(txGroup,hasOk);
-        return hasOk?1:0;
+        boolean hasOk = transaction(txGroup, 1);
+        txManagerService.dealTxGroup(txGroup, hasOk);
+        return hasOk ? 1 : 0;
     }
 
 
@@ -87,15 +87,15 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
      */
     private void setChannel(List<TxInfo> list) {
         for (TxInfo info : list) {
-            if(Constants.address.equals(info.getAddress())){
+            if (Constants.address.equals(info.getAddress())) {
                 Channel channel = SocketManager.getInstance().getChannelByModelName(info.getChannelAddress());
-                if (channel != null &&channel.isActive()) {
+                if (channel != null && channel.isActive()) {
                     ChannelSender sender = new ChannelSender();
                     sender.setChannel(channel);
 
                     info.setChannel(sender);
                 }
-            }else{
+            } else {
                 ChannelSender sender = new ChannelSender();
                 sender.setAddress(info.getAddress());
                 sender.setModelName(info.getChannelAddress());
@@ -104,7 +104,6 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
             }
         }
     }
-
 
 
     /**
@@ -128,7 +127,7 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
                     countDownLatchHelper.addExecute(new IExecute<Boolean>() {
                         @Override
                         public Boolean execute() {
-                            if(txInfo.getChannel()==null){
+                            if (txInfo.getChannel() == null) {
                                 return false;
                             }
 
@@ -193,10 +192,10 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
             }
             logger.info("--->" + hasOk + ",group:" + txGroup.getGroupId() + ",state:" + checkSate + ",list:" + txGroup.toJsonString());
             return hasOk;
-        }else{
+        } else {
             //回滚操作只发送通过不需要等待确认
             for (TxInfo txInfo : txGroup.getList()) {
-                if(txInfo.getChannel()!=null) {
+                if (txInfo.getChannel() != null) {
                     if (txInfo.getIsGroup() == 0) {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("a", "t");
@@ -215,7 +214,7 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
     }
 
     @Override
-    public String sendCompensateMsg(String model, String groupId, String data,int startState) {
+    public String sendCompensateMsg(String model, String groupId, String data, int startState) {
         JSONObject newCmd = new JSONObject();
         newCmd.put("a", "c");
         newCmd.put("d", data);
@@ -226,7 +225,7 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
     }
 
     @Override
-    public String sendMsg(final String model,final String msg, int delay) {
+    public String sendMsg(final String model, final String msg, int delay) {
         JSONObject jsonObject = JSON.parseObject(msg);
         String key = jsonObject.getString("k");
 
@@ -260,17 +259,16 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
         }
 
         try {
-            return  (String)task.getBack().doing();
+            return (String) task.getBack().doing();
         } catch (Throwable throwable) {
             return "-1";
-        }finally {
+        } finally {
             task.remove();
         }
     }
 
 
-
-    private void threadAwaitSend(final Task task, final TxInfo txInfo, final String msg){
+    private void threadAwaitSend(final Task task, final TxInfo txInfo, final String msg) {
         threadPool.execute(new Runnable() {
             @Override
             public void run() {
@@ -282,9 +280,9 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
                     }
                 }
 
-                if(txInfo!=null&&txInfo.getChannel()!=null) {
-                    txInfo.getChannel().send(msg,task);
-                }else{
+                if (txInfo != null && txInfo.getChannel() != null) {
+                    txInfo.getChannel().send(msg, task);
+                } else {
                     task.setBack(new IBack() {
                         @Override
                         public Object doing(Object... objs) throws Throwable {
@@ -304,7 +302,7 @@ public class TxManagerSenderServiceImpl implements TxManagerSenderService {
             @Override
             public void run() {
                 Task task = ConditionUtils.getInstance().getTask(key);
-                if(task!=null&&!task.isNotify()) {
+                if (task != null && !task.isNotify()) {
                     task.setBack(new IBack() {
                         @Override
                         public Object doing(Object... objs) throws Throwable {

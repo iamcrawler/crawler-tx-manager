@@ -45,18 +45,18 @@ public class ApiTxManagerServiceImpl implements ApiTxManagerService {
 
     @Override
     public int cleanNotifyTransaction(String groupId, String taskId) {
-        return managerService.cleanNotifyTransaction(groupId,taskId);
+        return managerService.cleanNotifyTransaction(groupId, taskId);
     }
 
 
     @Override
-    public boolean sendCompensateMsg(long currentTime, String groupId, String model, String address, String uniqueKey, String className, String methodStr, String data, int time,int startError) {
-        TransactionCompensateMsg transactionCompensateMsg = new TransactionCompensateMsg(currentTime, groupId, model, address, uniqueKey, className, methodStr, data, time, 0,startError);
+    public boolean sendCompensateMsg(long currentTime, String groupId, String model, String address, String uniqueKey, String className, String methodStr, String data, int time, int startError) {
+        TransactionCompensateMsg transactionCompensateMsg = new TransactionCompensateMsg(currentTime, groupId, model, address, uniqueKey, className, methodStr, data, time, 0, startError);
         return compensateService.saveCompensateMsg(transactionCompensateMsg);
     }
 
     @Override
-    public String sendMsg(String model,String msg) {
+    public String sendMsg(String model, String msg) {
         return txManagerSenderService.sendMsg(model, msg, configReader.getTransactionNettyDelayTime());
     }
 

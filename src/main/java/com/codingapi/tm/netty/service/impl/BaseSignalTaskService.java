@@ -6,7 +6,7 @@ import com.lorne.core.framework.utils.task.IBack;
 import com.lorne.core.framework.utils.task.Task;
 
 /**
- *  Created by liuliang on 2018/10/9.
+ * Created by liuliang on 2018/10/9.
  */
 public class BaseSignalTaskService {
 

@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 public class TxManagerServiceImpl implements TxManagerService {
 
 
-
     @Autowired
     private ConfigReader configReader;
 
@@ -49,7 +48,7 @@ public class TxManagerServiceImpl implements TxManagerService {
     @Override
     public TxGroup createTransactionGroup(String groupId) {
         TxGroup txGroup = new TxGroup();
-        if (compensateService.getCompensateByGroupId(groupId)!=null) {
+        if (compensateService.getCompensateByGroupId(groupId) != null) {
             txGroup.setIsCompensate(1);
         }
 
@@ -67,7 +66,7 @@ public class TxManagerServiceImpl implements TxManagerService {
     public TxGroup addTransactionGroup(String groupId, String taskId, int isGroup, String channelAddress, String methodStr) {
         String key = getTxGroupKey(groupId);
         TxGroup txGroup = getTxGroup(groupId);
-        if (txGroup==null) {
+        if (txGroup == null) {
             return null;
         }
         TxInfo txInfo = new TxInfo();
@@ -78,8 +77,8 @@ public class TxManagerServiceImpl implements TxManagerService {
         txInfo.setMethodStr(methodStr);
 
 
-        ModelInfo modelInfo =  ModelInfoManager.getInstance().getModelByChannelName(channelAddress);
-        if(modelInfo!=null) {
+        ModelInfo modelInfo = ModelInfoManager.getInstance().getModelByChannelName(channelAddress);
+        if (modelInfo != null) {
             txInfo.setUniqueKey(modelInfo.getUniqueKey());
             txInfo.setModelIpAddress(modelInfo.getIpAddress());
             txInfo.setModel(modelInfo.getModel());
@@ -96,7 +95,7 @@ public class TxManagerServiceImpl implements TxManagerService {
     public boolean rollbackTransactionGroup(String groupId) {
         String key = getTxGroupKey(groupId);
         TxGroup txGroup = getTxGroup(groupId);
-        if (txGroup==null) {
+        if (txGroup == null) {
             return false;
         }
         txGroup.setRollback(1);
@@ -107,26 +106,26 @@ public class TxManagerServiceImpl implements TxManagerService {
     @Override
     public int cleanNotifyTransaction(String groupId, String taskId) {
         int res = 0;
-        logger.info("start-cleanNotifyTransaction->groupId:"+groupId+",taskId:"+taskId);
+        logger.info("start-cleanNotifyTransaction->groupId:" + groupId + ",taskId:" + taskId);
         String key = getTxGroupKey(groupId);
         TxGroup txGroup = getTxGroup(groupId);
-        if (txGroup==null) {
+        if (txGroup == null) {
             logger.info("cleanNotifyTransaction - > txGroup is null ");
             return res;
         }
 
-        if(txGroup.getHasOver()==0){
+        if (txGroup.getHasOver() == 0) {
 
             //整个事务回滚.
             txGroup.setRollback(1);
             redisServerService.saveTransaction(key, txGroup.toJsonString());
 
-            logger.info("cleanNotifyTransaction - > groupId "+groupId+" not over,all transaction must rollback !");
+            logger.info("cleanNotifyTransaction - > groupId " + groupId + " not over,all transaction must rollback !");
             return 0;
         }
 
-        if(txGroup.getRollback()==1){
-            logger.info("cleanNotifyTransaction - > groupId "+groupId+" only rollback !");
+        if (txGroup.getRollback() == 1) {
+            logger.info("cleanNotifyTransaction - > groupId " + groupId + " only rollback !");
             return 0;
         }
 
@@ -134,7 +133,7 @@ public class TxManagerServiceImpl implements TxManagerService {
         boolean hasSet = false;
         for (TxInfo info : txGroup.getList()) {
             if (info.getKid().equals(taskId)) {
-                if(info.getNotify()==0&&info.getIsGroup()==0) {
+                if (info.getNotify() == 0 && info.getIsGroup() == 0) {
                     info.setNotify(1);
                     hasSet = true;
                     res = 1;
@@ -158,32 +157,32 @@ public class TxManagerServiceImpl implements TxManagerService {
         }
 
         //有更新的数据，需要修改记录
-        if(!isOver&&hasSet) {
+        if (!isOver && hasSet) {
             redisServerService.saveTransaction(key, txGroup.toJsonString());
         }
 
-        logger.info("end-cleanNotifyTransaction->groupId:"+groupId+",taskId:"+taskId+",res(1:commit,0:rollback):"+res);
+        logger.info("end-cleanNotifyTransaction->groupId:" + groupId + ",taskId:" + taskId + ",res(1:commit,0:rollback):" + res);
         return res;
     }
 
 
     @Override
-    public int closeTransactionGroup(String groupId,int state) {
+    public int closeTransactionGroup(String groupId, int state) {
         String key = getTxGroupKey(groupId);
         TxGroup txGroup = getTxGroup(groupId);
-        if(txGroup==null){
+        if (txGroup == null) {
             return 0;
         }
         txGroup.setState(state);
         txGroup.setHasOver(1);
-        redisServerService.saveTransaction(key,txGroup.toJsonString());
+        redisServerService.saveTransaction(key, txGroup.toJsonString());
         return transactionConfirmService.confirm(txGroup);
     }
 
 
     @Override
     public void dealTxGroup(TxGroup txGroup, boolean hasOk) {
-        if(hasOk) {
+        if (hasOk) {
             deleteTxGroup(txGroup);
         }
     }

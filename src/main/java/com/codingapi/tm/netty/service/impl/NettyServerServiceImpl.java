@@ -28,12 +28,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- *  Created by liuliang on 2018/10/9.
+ * Created by liuliang on 2018/10/9.
  */
 @Service
-public class NettyServerServiceImpl implements NettyServerService,DisposableBean {
-
-
+public class NettyServerServiceImpl implements NettyServerService, DisposableBean {
 
 
     @Autowired
@@ -54,8 +52,8 @@ public class NettyServerServiceImpl implements NettyServerService,DisposableBean
 
     @Override
     public void start() {
-        final int heartTime = configReader.getTransactionNettyHeartTime()+10;
-        txCoreServerHandler = new TxCoreServerHandler(threadPool,nettyService);
+        final int heartTime = configReader.getTransactionNettyHeartTime() + 10;
+        txCoreServerHandler = new TxCoreServerHandler(threadPool, nettyService);
         bossGroup = new NioEventLoopGroup(50); // (1)
         workerGroup = new NioEventLoopGroup();
         try {

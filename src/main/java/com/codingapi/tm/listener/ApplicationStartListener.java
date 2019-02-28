@@ -19,12 +19,11 @@ public class ApplicationStartListener implements ApplicationListener<EmbeddedSer
     public void onApplicationEvent(EmbeddedServletContainerInitializedEvent event) {
         int serverPort = event.getEmbeddedServletContainer().getPort();
         String ip = getIp();
-        Constants.address = ip+":"+serverPort;
+        Constants.address = ip + ":" + serverPort;
     }
 
 
-
-    private String getIp(){
+    private String getIp() {
         String host = null;
         try {
             host = InetAddress.getLocalHost().getHostAddress();

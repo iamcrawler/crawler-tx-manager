@@ -22,15 +22,15 @@ public class LoadBalanceServiceImpl implements LoadBalanceService {
     @Override
     public boolean put(LoadBalanceInfo loadBalanceInfo) {
         String groupName = getLoadBalanceGroupName(loadBalanceInfo.getGroupId());
-        redisServerService.saveLoadBalance(groupName,loadBalanceInfo.getKey(),loadBalanceInfo.getData());
+        redisServerService.saveLoadBalance(groupName, loadBalanceInfo.getKey(), loadBalanceInfo.getData());
         return true;
     }
 
     @Override
     public LoadBalanceInfo get(String groupId, String key) {
         String groupName = getLoadBalanceGroupName(groupId);
-        String bytes = redisServerService.getLoadBalance(groupName,key);
-        if(bytes==null) {
+        String bytes = redisServerService.getLoadBalance(groupName, key);
+        if (bytes == null) {
             return null;
         }
 
@@ -49,6 +49,6 @@ public class LoadBalanceServiceImpl implements LoadBalanceService {
 
     @Override
     public String getLoadBalanceGroupName(String groupId) {
-        return configReader.getKeyPrefixLoadbalance()+groupId;
+        return configReader.getKeyPrefixLoadbalance() + groupId;
     }
 }

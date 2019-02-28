@@ -26,14 +26,14 @@ public class TxManagerController {
 
 
     @RequestMapping("/cleanNotifyTransaction")
-    public int cleanNotifyTransaction(@RequestParam("groupId") String groupId,@RequestParam("taskId") String taskId) {
-        return apiTxManagerService.cleanNotifyTransaction(groupId,taskId);
+    public int cleanNotifyTransaction(@RequestParam("groupId") String groupId, @RequestParam("taskId") String taskId) {
+        return apiTxManagerService.cleanNotifyTransaction(groupId, taskId);
     }
 
 
     @RequestMapping("/sendMsg")
-    public String sendMsg(@RequestParam("msg") String msg,@RequestParam("model") String model) {
-        return apiTxManagerService.sendMsg(model,msg);
+    public String sendMsg(@RequestParam("msg") String msg, @RequestParam("model") String model) {
+        return apiTxManagerService.sendMsg(model, msg);
     }
 
 
@@ -44,9 +44,8 @@ public class TxManagerController {
                                      @RequestParam("time") int time, @RequestParam("data") String data,
                                      @RequestParam("methodStr") String methodStr, @RequestParam("address") String address,
                                      @RequestParam("startError") int startError) {
-        return apiTxManagerService.sendCompensateMsg(currentTime, groupId, model, address, uniqueKey, className, methodStr, data, time,startError);
+        return apiTxManagerService.sendCompensateMsg(currentTime, groupId, model, address, uniqueKey, className, methodStr, data, time, startError);
     }
-
 
 
     @RequestMapping("/state")

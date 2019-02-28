@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 通知事务回调
- *  Created by liuliang on 2018/10/9.
+ * Created by liuliang on 2018/10/9.
  */
 @Service(value = "t")
 public class ActionTServiceImpl extends BaseSignalTaskService implements IActionService {
